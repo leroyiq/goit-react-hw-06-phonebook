@@ -1,6 +1,6 @@
-const { createSlice } = require('@reduxjs/toolkit');
+import { createSlice } from '@reduxjs/toolkit';
 
-export const slice = createSlice({
+export const contactSlice = createSlice({
   name: 'contacts',
   initialState: [
     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -18,4 +18,4 @@ export const slice = createSlice({
   },
 });
 
-export const { addContact, delContact } = slice.actions;
+export const { addContact, delContact } = contactSlice.actions;
