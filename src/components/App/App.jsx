@@ -6,40 +6,31 @@ import { Filter } from 'components/Filter/Filter';
 import { Wrapper, Title } from './App.styled';
 import toast, { Toaster } from 'react-hot-toast';
 
-const initContacts = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
+
 
 export function App() {
-  const [contacts, setContacts] = useState(() => {
-    return (
-      JSON.parse(localStorage.getItem('contacts')) || initContacts
-    );
-  });
 
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState(() => {
+  //   return (
+  //     JSON.parse(localStorage.getItem('contacts')) || initContacts
+  //   );
+  // });
 
-  useEffect(() => {
-    return window.localStorage.setItem(
-      'contacts',
-      JSON.stringify(contacts)
-    );
-  }, [contacts]);
+  // const [filter, setFilter] = useState('');
 
-  const handleChange = event => {
-    const { value } = event.target;
-    setFilter(value);
-  };
+  // useEffect(() => {
+  //   return window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
+
+  // const handleChange = event => {
+  //   const { value } = event.target;
+  //   setFilter(value);
+  // };
 
   const onSubmit = ({ name, number }) => {
-    const idContact = 'id-' + nanoid(3);
-    setContacts(prevState => [
-      ...prevState,
-      { id: idContact, name, number },
-    ]);
+    // const idContact = 'id-' + nanoid(3);
+    // setContacts(prevState => [...prevState, { id: idContact, name, number }]);
+
     toast.success('Successfully contact created!', {
       duration: 1500,
     });
@@ -48,15 +39,11 @@ export function App() {
   const handleFilter = () => {
     const normalizedFilter = filter.toLowerCase();
 
-    return contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(normalizedFilter)
-    );
+    return contacts.filter(contact => contact.name.toLocaleLowerCase().includes(normalizedFilter));
   };
 
   const handleDelete = id => {
-    setContacts(prevState =>
-      prevState.filter(contact => contact.id !== id)
-    );
+    // setContacts(prevState => prevState.filter(contact => contact.id !== id));
     toast.success('Contact deleted!', {
       duration: 1500,
     });
@@ -71,14 +58,10 @@ export function App() {
           <Filter onFilter={filter} onChange={handleChange} />
         )}
 
-        <ContactList
-          contacts={handleFilter()}
-          onDelete={handleDelete}
-        />
+        <ContactList contacts={handleFilter()} onDelete={handleDelete} />
       </>
 
       <Toaster />
     </Wrapper>
   );
 }
-
