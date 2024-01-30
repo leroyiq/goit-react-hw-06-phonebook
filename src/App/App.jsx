@@ -1,8 +1,8 @@
-import { nanoid } from 'nanoid';
 import { useState, useEffect } from 'react';
 import { Wrapper, Title } from './App.styled';
 import toast, { Toaster } from 'react-hot-toast';
 import { ContactForm, ContactList, Filter} from 'components';
+import { nanoid } from '@reduxjs/toolkit';
 
 const initContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },

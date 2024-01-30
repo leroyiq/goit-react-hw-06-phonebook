@@ -1,5 +1,4 @@
-import { Label } from './Filter.styled';
-import { Input } from './Filter.styled';
+import { Label, Input } from './Filter.styled';
 
 export const Filter = ({ onFilter, onChange }) => {
   return (
