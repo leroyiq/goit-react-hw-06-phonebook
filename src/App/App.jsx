@@ -1,24 +1,19 @@
-import { useState, useEffect } from 'react';
+import {  useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import { Wrapper, Title } from './App.styled';
 import toast, { Toaster } from 'react-hot-toast';
 import { ContactForm, ContactList, Filter} from 'components';
-import { nanoid } from '@reduxjs/toolkit';
+import { addContact, deleteContact } from 'redux/contactsSlice';
+import { search } from 'redux/filterSlice';
 
-const initContacts = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
 
 export const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    return (
-      JSON.parse(localStorage.getItem('contacts')) || initContacts
-    );
-  });
 
-  const [filter, setFilter] = useState('');
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     return window.localStorage.setItem(
@@ -26,21 +21,11 @@ export const App = () => {
       JSON.stringify(contacts)
     );
   }, [contacts]);
-
+  
+  
   const handleChange = event => {
     const { value } = event.target;
-    setFilter(value);
-  };
-
-  const onSubmit = ({ name, number }) => {
-    const idContact = 'id-' + nanoid(3);
-    setContacts(prevState => [
-      ...prevState,
-      { id: idContact, name, number },
-    ]);
-    toast.success('Successfully contact created!', {
-      duration: 1500,
-    });
+    dispatch(search(value));
   };
 
   const handleFilter = () => {
@@ -50,11 +35,19 @@ export const App = () => {
       contact.name.toLocaleLowerCase().includes(normalizedFilter)
     );
   };
-
+  
+  // add contact
+  const onSubmit = ({ name, number }) => {
+    const idContact = 'id-' + nanoid(3);
+    dispatch(addContact({ id: idContact, name, number }) );
+    toast.success('Successfully contact created!', {
+      duration: 1500,
+    });
+  };
+  
+// delete contact
   const handleDelete = id => {
-    setContacts(prevState =>
-      prevState.filter(contact => contact.id !== id)
-    );
+    dispatch(deleteContact(id));
     toast.success('Contact deleted!', {
       duration: 1500,
     });

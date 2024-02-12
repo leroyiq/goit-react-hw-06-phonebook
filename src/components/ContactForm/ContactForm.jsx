@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 export const ContactForm = ({ addContact, onContacts }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+ 
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -30,12 +31,14 @@ export const ContactForm = ({ addContact, onContacts }) => {
     if (!checkContact) {
       addContact({ name, number });
       setName('');
-      setNumber('');
+      setNumber(''); 
+      
       return;
     }
     toast.error(`${name} is already in contact`, {
       duration: 1500,
     });
+    
   };
 
   return (
@@ -51,7 +54,7 @@ export const ContactForm = ({ addContact, onContacts }) => {
             placeholder="David Sterling"
             //     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             //   title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
+            required 
           />
         </Label>
 
